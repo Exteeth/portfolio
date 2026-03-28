@@ -14,6 +14,89 @@ const CodeLayerIcon = () => (
   </svg>
 );
 
+/* ─── CSS Art Covers ─────────────────────────────────── */
+
+// Project 1 — Texas Auto: industrial grid with motion lines
+const CoverTexasAuto = () => (
+  <div className="pcover pcover--texas" aria-hidden="true">
+    <div className="pcover__bg" />
+    <div className="pcover__grid" />
+    <div className="pcover__lines">
+      {[...Array(5)].map((_, i) => (
+        <div key={i} className="pcover__line" style={{ '--i': i }} />
+      ))}
+    </div>
+    <div className="pcover__circle pcover__circle--1" />
+    <div className="pcover__circle pcover__circle--2" />
+    <div className="pcover__label">
+      <span className="pcover__num">01</span>
+      <span className="pcover__tag">Auto Repair</span>
+    </div>
+    {/* Wrench icon SVG art */}
+    <svg className="pcover__art" viewBox="0 0 120 120" fill="none">
+      <path d="M90 10 C105 25 105 50 90 65 L30 110 C25 115 15 115 10 110 C5 105 5 95 10 90 L55 30 C70 15 75 -5 90 10Z"
+        stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" opacity="0.6"/>
+      <circle cx="88" cy="22" r="8" stroke="currentColor" strokeWidth="2.5" opacity="0.4"/>
+    </svg>
+  </div>
+);
+
+// Project 2 — Mid County Lube: speed lines + dashboard feel
+const CoverMidCounty = () => (
+  <div className="pcover pcover--mid" aria-hidden="true">
+    <div className="pcover__bg" />
+    <div className="pcover__speedlines">
+      {[...Array(8)].map((_, i) => (
+        <div key={i} className="pcover__speed" style={{ '--i': i }} />
+      ))}
+    </div>
+    <div className="pcover__dial" />
+    <div className="pcover__dial pcover__dial--2" />
+    <div className="pcover__label">
+      <span className="pcover__num">02</span>
+      <span className="pcover__tag">Lube & Service</span>
+    </div>
+    <svg className="pcover__art" viewBox="0 0 120 120" fill="none">
+      {/* Speedometer arc */}
+      <path d="M20 80 A50 50 0 1 1 100 80" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.5"/>
+      <path d="M35 80 A35 35 0 1 1 85 80" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.3"/>
+      <line x1="60" y1="80" x2="82" y2="38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.7"/>
+      <circle cx="60" cy="80" r="6" fill="currentColor" opacity="0.5"/>
+    </svg>
+  </div>
+);
+
+// Project 3 — WebKhongKwan: soft gift ribbons + confetti dots
+const CoverWebKhongKwan = () => (
+  <div className="pcover pcover--kwon" aria-hidden="true">
+    <div className="pcover__bg" />
+    <div className="pcover__dots">
+      {[...Array(16)].map((_, i) => (
+        <div key={i} className="pcover__dot" style={{ '--i': i }} />
+      ))}
+    </div>
+    <div className="pcover__ribbon pcover__ribbon--h" />
+    <div className="pcover__ribbon pcover__ribbon--v" />
+    <div className="pcover__label">
+      <span className="pcover__num">03</span>
+      <span className="pcover__tag">Gift Platform</span>
+    </div>
+    <svg className="pcover__art" viewBox="0 0 120 120" fill="none">
+      {/* Gift box */}
+      <rect x="25" y="50" width="70" height="55" rx="4" stroke="currentColor" strokeWidth="2.5" opacity="0.5"/>
+      <rect x="20" y="38" width="80" height="18" rx="4" stroke="currentColor" strokeWidth="2.5" opacity="0.5"/>
+      <line x1="60" y1="38" x2="60" y2="105" stroke="currentColor" strokeWidth="2.5" opacity="0.5"/>
+      {/* Bow */}
+      <path d="M60 38 C50 28 35 25 35 35 C35 42 50 42 60 38Z" stroke="currentColor" strokeWidth="2" opacity="0.4"/>
+      <path d="M60 38 C70 28 85 25 85 35 C85 42 70 42 60 38Z" stroke="currentColor" strokeWidth="2" opacity="0.4"/>
+    </svg>
+  </div>
+);
+
+const covers = [CoverTexasAuto, CoverMidCounty, CoverWebKhongKwan];
+
+/* ─────────────────────────────────────────────────────── */
+
 const projects = [
   {
     id: 1,
@@ -23,7 +106,6 @@ const projects = [
     tech: ['React', 'Tailwind CSS', 'Vite', 'Maps API'],
     type: 'Client Project',
     liveUrl: 'https://texas-auto-repair-center.vercel.app/',
-    imgUrl: 'https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 2,
@@ -33,7 +115,6 @@ const projects = [
     tech: ['React', 'SEO Optics', 'Responsive UI'],
     type: 'Client Project',
     liveUrl: 'https://midcountylubeandautorepair.vercel.app',
-    imgUrl: 'https://images.unsplash.com/photo-1598460613865-68045610ec1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 3,
@@ -43,7 +124,6 @@ const projects = [
     tech: ['Next.js', 'React Architecture', 'CSS Modules'],
     type: 'Full-Stack Platform',
     liveUrl: 'https://www.webkhongkwan.com/',
-    imgUrl: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
   },
 ];
 
@@ -59,53 +139,52 @@ export default function Projects() {
         </div>
 
         <div className="projects__list">
-          {projects.map((project) => (
-            <article className={`project-card reveal`} key={project.id}>
-              
-              <div className="project-card__visual hover-target">
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="project-card__link" aria-label={`Visit ${project.title}`}></a>
-                <img src={project.imgUrl} alt={project.title} loading="lazy" />
-                
-                {/* The Magic Hover Button - CSS scales this up on hover */}
-                <div className="project-card__visit">Visit</div>
-              </div>
+          {projects.map((project, idx) => {
+            const Cover = covers[idx];
+            return (
+              <article className="project-card reveal" key={project.id}>
 
-              <div className="project-card__info reveal-stagger">
-                <span className="project-card__role">
-                  <CodeLayerIcon /> {project.type}
-                </span>
-                
-                <h3 className="project-card__title">
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="hover-target">
-                    {project.title}
-                  </a>
-                </h3>
-                
-                <p className="projects__desc">{project.description}</p>
-                
-                <div className="project-card__tech">
-                  {project.tech.map((t, ti) => (
-                    <span className="project-card__tag" key={ti}>
-                      {t}
-                    </span>
-                  ))}
+                <div className="project-card__visual hover-target">
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="project-card__link" aria-label={`Visit ${project.title}`}></a>
+                  <Cover />
+                  <div className="project-card__visit">Visit</div>
                 </div>
 
-                <div style={{ marginTop: '1rem' }}>
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hero__btn hero__btn--secondary hover-target"
-                    style={{ padding: '12px 24px', fontSize: 'var(--text-sm)' }}
-                  >
-                    View Live Site <ExternalLinkIcon />
-                  </a>
-                </div>
-              </div>
+                <div className="project-card__info reveal-stagger">
+                  <span className="project-card__role">
+                    <CodeLayerIcon /> {project.type}
+                  </span>
 
-            </article>
-          ))}
+                  <h3 className="project-card__title">
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="hover-target">
+                      {project.title}
+                    </a>
+                  </h3>
+
+                  <p className="projects__desc">{project.description}</p>
+
+                  <div className="project-card__tech">
+                    {project.tech.map((t, ti) => (
+                      <span className="project-card__tag" key={ti}>{t}</span>
+                    ))}
+                  </div>
+
+                  <div style={{ marginTop: '1rem' }}>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hero__btn hero__btn--secondary hover-target"
+                      style={{ padding: '12px 24px', fontSize: 'var(--text-sm)' }}
+                    >
+                      View Live Site <ExternalLinkIcon />
+                    </a>
+                  </div>
+                </div>
+
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
