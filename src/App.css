@@ -2,6 +2,11 @@
    NUMCHAI PORTFOLIO — High-End Component Styles
    ============================================ */
 
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.25); opacity: 0.7; }
+}
+
 /* ==========================================
    NAVBAR
    ========================================== */
@@ -270,6 +275,7 @@
   align-items: center;
   position: relative;
   padding: calc(var(--nav-height) + var(--space-xl)) var(--space-md) var(--space-xl);
+  overflow: hidden;
 }
 
 .hero__inner {
@@ -396,8 +402,8 @@
 
 .hero__btn--primary:hover {
   color: white;
-  transform: translateY(-4px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 30px var(--accent-glow), 0 0 20px rgba(255, 71, 87, 0.4);
 }
 
 .hero__btn--primary:hover::before {
@@ -743,12 +749,14 @@
 }
 
 .project-card__visual:hover {
-  transform: scale(0.98);
+  transform: scale(0.96) perspective(1000px) rotateX(2deg) rotateY(-2deg);
+  box-shadow: 0 30px 60px -15px var(--accent-glow);
+  z-index: 20;
 }
 
 .project-card__visual:hover img {
-  transform: scale(1.05);
-  filter: brightness(0.7);
+  transform: scale(1.1);
+  filter: brightness(0.6) saturate(1.3) contrast(1.1);
 }
 
 /* The Magic Cursor Follower interaction on Hover happens via JS/CSS */
@@ -756,23 +764,24 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0);
+  transform: translate(-50%, -50%) scale(0) rotate(-15deg);
   background: var(--accent);
   color: white;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
   text-transform: uppercase;
   z-index: 10;
   opacity: 0;
-  transition: transform var(--transition-bounce), opacity var(--transition-fast);
+  transition: transform 0.6s var(--ease-elastic), opacity 0.4s ease;
   pointer-events: none; /* Let the link handle click */
+  box-shadow: 0 0 40px var(--accent-glow);
 }
 
 .project-card__link {
@@ -782,8 +791,15 @@
 }
 
 .project-card__visual:hover .project-card__visit {
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
   opacity: 1;
+}
+
+.project-card {
+  transition: transform 0.6s var(--ease-out-expo);
+}
+.project-card:hover {
+  transform: translateY(-10px);
 }
 
 .project-card__info {
@@ -977,3 +993,400 @@
   vertical-align: middle;
   animation: pulse 2s infinite;
 }
+
+/* ==========================================
+   HERO — TICKER TAPE
+   ========================================== */
+.hero__ticker {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  border-top: 1px solid var(--bg-glass-border);
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(4px);
+  padding: 12px 0;
+  z-index: 3;
+}
+
+.hero__ticker-inner {
+  display: flex;
+  gap: 0;
+  animation: ticker-scroll 25s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+
+.hero__ticker-item {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0 var(--space-md);
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.hero__ticker-item:hover {
+  color: var(--accent);
+}
+
+.hero__ticker-sep {
+  color: var(--accent);
+  margin-left: var(--space-md);
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================================
+   HERO — STATS BAR
+   ========================================== */
+.hero__stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--bg-glass-border);
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero__stat-num {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.hero__stat-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.hero__stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--bg-glass-border);
+}
+
+/* ==========================================
+   HERO — SCROLL CUE
+   ========================================== */
+.hero__scroll-cue {
+  position: absolute;
+  bottom: 80px;
+  right: clamp(20px, 5vw, 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.hero__scroll-cue-track {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--text-muted);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  animation: bounce-down 2s ease-in-out infinite;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.hero__scroll-cue:hover .hero__scroll-cue-track {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hero__scroll-cue-track svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hero__scroll-cue-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  writing-mode: vertical-rl;
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+/* hero btn arrow micro-animation */
+.hero__btn-arrow {
+  display: inline-block;
+  transition: transform var(--transition-bounce);
+}
+
+.hero__btn--primary:hover .hero__btn-arrow {
+  transform: translateX(5px);
+}
+
+/* ==========================================
+   HERO SHAPE — 3rd floating orb
+   ========================================== */
+.hero__shape--3 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent);
+  top: 70%;
+  right: -5%;
+  opacity: 0.06;
+  animation: float-complex 30s ease-in-out infinite reverse;
+}
+
+/* ==========================================
+   BADGE PULSE DOT
+   ========================================== */
+.hero__badge-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--secondary);
+  box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.4);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(46, 213, 115, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+}
+
+/* ==========================================
+   SECTION TITLE LINE ACCENT
+   ========================================== */
+.hero__title-line--accent .hero__title-text {
+  position: relative;
+}
+
+.hero__title-line--accent .hero__title-text::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 2px;
+  opacity: 0.5;
+  animation: heroFadeUp 1s var(--ease-out-expo) 0.8s both;
+}
+
+/* will-change GPU hints */
+.hero__shape,
+.hero-animate-in,
+.hero__ticker-inner,
+.project-card__visual img,
+.skills__card,
+.about__card-img {
+  will-change: transform;
+}
+
+/* ==========================================
+   SKILL CARD — stagger index animations
+   ========================================== */
+.skills__card:nth-child(1) { animation-delay: 0.05s; }
+.skills__card:nth-child(2) { animation-delay: 0.15s; }
+.skills__card:nth-child(3) { animation-delay: 0.25s; }
+
+/* ==========================================
+   REVEAL — LEFT / RIGHT
+   ========================================== */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================
+   FULL MOBILE RESPONSIVE — ≤768px
+   ========================================== */
+@media (max-width: 768px) {
+
+  /* --- HERO --- */
+  .hero {
+    padding-top: calc(var(--nav-height) + var(--space-lg));
+    padding-bottom: calc(var(--space-2xl) + 60px); /* space for ticker */
+    text-align: left;
+  }
+
+  .hero__title {
+    max-width: 100%;
+  }
+
+  .hero__btn {
+    padding: 14px 28px;
+    font-size: var(--text-sm);
+  }
+
+  .hero__stats {
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+  }
+
+  .hero__stat-num {
+    font-size: var(--text-2xl);
+  }
+
+  .hero__scroll-cue {
+    display: none; /* hidden on mobile - not enough room */
+  }
+
+  .hero__visuals {
+    opacity: 0.3;
+    width: 100%;
+  }
+
+  /* --- ABOUT --- */
+  .about__visual {
+    padding: var(--space-md);
+  }
+
+  .about__card {
+    max-width: 300px;
+  }
+
+  .about__stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .about__stat-num {
+    font-size: var(--text-3xl);
+  }
+
+  /* --- SKILLS --- */
+  .skills__header {
+    max-width: 100%;
+  }
+
+  /* --- PROJECTS --- */
+  .project-card__title {
+    font-size: var(--text-2xl);
+  }
+
+  .project-card__visual {
+    aspect-ratio: 16/9;
+  }
+
+  .projects__list {
+    gap: var(--space-xl);
+  }
+
+  /* --- CONTACT --- */
+  .contact__card {
+    padding: var(--space-lg);
+  }
+
+  .contact__info-list {
+    margin-top: var(--space-md);
+  }
+
+  /* --- SECTION padding --- */
+  .section {
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+
+/* ==========================================
+   MEDIUM SCREENS — 480px–767px
+   ========================================== */
+@media (max-width: 480px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero__btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__stats {
+    gap: var(--space-sm);
+  }
+
+  .hero__stat-divider {
+    height: 30px;
+  }
+
+  .about__stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .navbar__links-wrapper {
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+
+/* ==========================================
+   LARGE SCREENS — Luxury spacing
+   ========================================== */
+@media (min-width: 1400px) {
+  .hero__inner {
+    max-width: 900px;
+  }
+
+  .project-card {
+    gap: var(--space-2xl);
+  }
+}
+

@@ -1,4 +1,5 @@
-// Custom SVGs
+import { useEffect, useRef } from 'react';
+
 const GlobeIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 14, height: 14 }}>
     <circle cx="12" cy="12" r="10"></circle>
@@ -7,15 +8,10 @@ const GlobeIcon = () => (
   </svg>
 );
 
-const StarIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" style={{ opacity: 0.8 }}>
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-  </svg>
-);
-
-const DownArrowIcon = () => (
+const ArrowDownIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 5v14M19 12l-7 7-7-7" />
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <polyline points="19 12 12 19 5 12"></polyline>
   </svg>
 );
 
@@ -25,43 +21,87 @@ const GithubIcon = () => (
   </svg>
 );
 
+const SparkleIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1em', height: '1em' }}>
+    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+  </svg>
+);
+
+const tickerItems = [
+  'React', 'TypeScript', 'CSS Mastery', 'Vite', 'Responsive Design',
+  'Animation', 'Frontend Dev', 'UI/UX', 'Next.js', 'Web Performance',
+];
+
 export default function Hero() {
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const handleMouseMove = (e) => {
+      const rect = hero.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+
+      const shape1 = hero.querySelector('.hero__shape--1');
+      const shape2 = hero.querySelector('.hero__shape--2');
+      if (shape1) shape1.style.transform = `translate(${dx * 30}px, ${dy * 30}px)`;
+      if (shape2) shape2.style.transform = `translate(${dx * -20}px, ${dy * -20}px)`;
+    };
+
+    hero.addEventListener('mousemove', handleMouseMove);
+    return () => hero.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <section id="hero" className="hero">
-      <div className="hero__visuals">
+    <section id="hero" className="hero" ref={heroRef}>
+      <div className="hero__visuals" aria-hidden="true">
         <div className="hero__shape hero__shape--1" />
         <div className="hero__shape hero__shape--2" />
+        <div className="hero__shape hero__shape--3" />
       </div>
 
       <div className="hero__inner">
         <div className="hero__badge hero-animate-in" style={{ '--delay': '0.1s' }}>
           <GlobeIcon />
-          Available Worldwide
+          <span>Available for International Roles</span>
+          <span className="hero__badge-dot" aria-hidden="true" />
         </div>
 
         <h1 className="hero__title">
           <span className="hero__title-line">
-            <span className="hero__title-text hero-animate-in" style={{ '--delay': '0.3s' }}>Frontend Design</span>
+            <span className="hero__title-text hero-animate-in" style={{ '--delay': '0.25s' }}>
+              Frontend
+            </span>
           </span>
-          <br />
+          <span className="hero__title-line hero__title-line--accent">
+            <span className="hero__title-text accent hero-animate-in" style={{ '--delay': '0.45s' }}>
+              Design <SparkleIcon />
+            </span>
+          </span>
           <span className="hero__title-line">
-            <span className="hero__title-text accent hover-target hero-animate-in" style={{ '--delay': '0.5s' }}>
-              Elevated. <StarIcon />
+            <span className="hero__title-text hero-animate-in" style={{ '--delay': '0.65s' }}>
+              Elevated.
             </span>
           </span>
         </h1>
 
-        <p className="hero__desc hero-animate-in" style={{ '--delay': '0.7s' }}>
-          I'm <strong>Numchai Boonchan</strong>, a frontend developer blending precise 
-          code with high-end aesthetic interactions. Currently studying Computer Education at Khon Kaen University.
+        <p className="hero__desc hero-animate-in" style={{ '--delay': '0.85s' }}>
+          I'm <strong>Numchai Boonchan</strong> — a frontend developer crafting 
+          precise, high-end web experiences. Computer Education student at&nbsp;
+          <strong>Khon Kaen University</strong>.
         </p>
 
-        <div className="hero__actions hero-animate-in" style={{ '--delay': '0.9s' }}>
+        <div className="hero__actions hero-animate-in" style={{ '--delay': '1.05s' }}>
           <a
             className="hero__btn hero__btn--primary hover-target"
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Explore Work
+            <span className="hero__btn-arrow">→</span>
           </a>
           <a
             href="https://github.com/Exteeth"
@@ -73,14 +113,47 @@ export default function Hero() {
             GitHub
           </a>
         </div>
+
+        <div className="hero__stats hero-animate-in" style={{ '--delay': '1.2s' }}>
+          <div className="hero__stat">
+            <span className="hero__stat-num">3+</span>
+            <span className="hero__stat-label">Live Projects</span>
+          </div>
+          <div className="hero__stat-divider" />
+          <div className="hero__stat">
+            <span className="hero__stat-num">15+</span>
+            <span className="hero__stat-label">Tech Mastered</span>
+          </div>
+          <div className="hero__stat-divider" />
+          <div className="hero__stat">
+            <span className="hero__stat-num">100%</span>
+            <span className="hero__stat-label">Committed</span>
+          </div>
+        </div>
       </div>
 
-      <div
-        className="hero__scroll-arrow hover-target"
+      {/* Scroll cue */}
+      <button
+        className="hero__scroll-cue hero-animate-in hover-target"
+        style={{ '--delay': '1.5s' }}
         onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-        aria-label="Scroll down"
+        aria-label="Scroll to about"
       >
-        <DownArrowIcon />
+        <span className="hero__scroll-cue-track">
+          <ArrowDownIcon />
+        </span>
+        <span className="hero__scroll-cue-label">Scroll</span>
+      </button>
+
+      {/* Ticker tape */}
+      <div className="hero__ticker" aria-hidden="true">
+        <div className="hero__ticker-inner">
+          {[...tickerItems, ...tickerItems].map((item, i) => (
+            <span className="hero__ticker-item" key={i}>
+              {item} <span className="hero__ticker-sep">·</span>
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );
