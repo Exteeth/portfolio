@@ -19,7 +19,7 @@ export default function Footer() {
       </div>
 
       <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-        Designed & Engineered with <span><HeartIcon /></span> by Numchai Boonchan
+        Designed & Engineered by Numchai Boonchan
       </div>
       
       <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
